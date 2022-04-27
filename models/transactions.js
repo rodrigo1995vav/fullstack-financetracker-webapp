@@ -1,4 +1,4 @@
-const { sequelize } = require("../../config/postgres");
+const { sequelize } = require("../config/postgres");
 const { DataTypes } = require("sequelize");
 
 const Transactions = sequelize.define(
