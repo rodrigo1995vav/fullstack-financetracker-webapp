@@ -1,5 +1,7 @@
 require("dotenv").config()
 
+const { dbConnectPostgres } = require('./config/postgres')
+
 const express = require('express')
 
 const cors = require('cors')
@@ -15,3 +17,5 @@ const port = process.env.PORT || 3000
 app.listen (port, () => {
     console.log(`Your app is ready and running on http://localhost:${port}`)
 })
+
+dbConnectPostgres()
