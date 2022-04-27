@@ -1,10 +1,14 @@
 const { usersModel } = require ("../models")
 
 
+
 const registerCtrl = async (req, res) => {
 
     try {
-        res.send({"data":"data"})
+        const body = req.body
+        const dataUser = await usersModel.create(body) 
+        dataUser.set('password', undefined, {strict: false})
+        res.send(dataUser)
     } catch (e){
         console.log(e)
     }
