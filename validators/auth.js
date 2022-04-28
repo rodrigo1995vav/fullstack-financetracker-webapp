@@ -4,6 +4,9 @@ const { validateResults } = require("../utils/handlerValidator");
 const validatorLoginItem= [
   check("email").exists().notEmpty(), 
   check("password").exists().notEmpty(), 
+  (req, res, next) => {
+    validateResults(req, res, next);
+  } 
 ];
 const validatorRegisterItem= [
   check("name").exists().notEmpty(),
