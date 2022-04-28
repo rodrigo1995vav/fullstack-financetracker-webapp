@@ -60,8 +60,8 @@ const loginCtrl = async (req, res) =>{
         )
 
 
-
-        res.send ({ refreshToken, accessToken })
+        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000})
+        res.send ({ accessToken })
         
     } catch (e) {
         console.log(e)
