@@ -1,7 +1,9 @@
 const { matchedData } = require("express-validator")
 const { usersModel } = require ("../models")
+const jwt = require("jsonwebtoken")
 const { encrypt, compare} = require("../utils/handlePassword")
 const { handleHttpError } = require("../utils/handleError")
+require ('dotenv')
 
 
 
@@ -37,7 +39,29 @@ const loginCtrl = async (req, res) =>{
             return
         }
 
-        res.send ({"data": hashPassword})
+        const accessToken = jwt.sign(
+            {
+                "username":user.name
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            {
+                expiresIn: '30s'
+            }
+        )
+
+        const refreshToken = jwt.sign(
+            {
+                "username":user.name
+            },
+            process.env.REFRESH_TOKEN_SECRET,
+            {
+                expiresIn: '1d'
+            }
+        )
+
+
+
+        res.send ({ refreshToken, accessToken })
         
     } catch (e) {
         console.log(e)
