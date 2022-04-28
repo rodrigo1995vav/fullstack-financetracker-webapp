@@ -14,9 +14,10 @@ const getItems =  async(req,res) => {
 
 const getItem = async(req, res) =>{
     try {
-        req = matchedData(req)
-        const {id} = req
-        const data = await categoriesModel.findById(id)
+        //req = matchedData(req)
+        const id = req.params.id
+        console.log(id)
+        const data = await categoriesModel.findByPk(id)
         res.send({data}) 
     } catch (e) {
         handleHttpError(res, "ERROR_GET_ITEM")
@@ -26,9 +27,10 @@ const getItem = async(req, res) =>{
 const createItem = async (req, res) =>{
 
     try {
-        const body= matchedData(req)
+        const body= req.body
+        console.log(body)
         const data = await categoriesModel.create(body)
-        res.send({data})
+        res.send(data)
     } catch (e) {
         handleHttpError(res, 'ERROR_CREATE_ITEMS')
     }
