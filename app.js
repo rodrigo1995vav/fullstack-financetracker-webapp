@@ -14,7 +14,7 @@ app.use(cors())
 
 app.use(express.json())
 
-app.use("/api", require("./routes/auth"))
+app.use("/api", require("./routes/"))
 
 app.listen (port, () => {
     console.log(`Your app is ready and running on http://localhost:${port}`)
