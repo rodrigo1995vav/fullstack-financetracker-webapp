@@ -1,3 +1,4 @@
+const { matchedData } = require("express-validator")
 const { usersModel } = require ("../models")
 
 
@@ -5,8 +6,8 @@ const { usersModel } = require ("../models")
 const registerCtrl = async (req, res) => {
 
     try {
-        const body = req.body
-        const dataUser = await usersModel.create(body) 
+        req = matchedData(req)
+        const dataUser = await usersModel.create(req) 
         dataUser.set('password', undefined, {strict: false})
         res.send(dataUser)
     } catch (e){
