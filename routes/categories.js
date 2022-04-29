@@ -1,10 +1,11 @@
 const express = require ("express")
 const router = express.Router()
 const {getItems, getItem, createItem, updateItem, deleteItem} = require ("../controllers/categories")
+const authMiddleware = require("../middleware/verifySession")
 
 
 
-router.get("/", getItems)
+router.get("/", authMiddleware, getItems)
 
 router.get("/:id", getItem)
 
