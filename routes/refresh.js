@@ -1,9 +1,7 @@
 const express = require ("express")
-const handleLogout = require("../controllers/logout")
+const handleRefreshToken = require("../controllers/refreshToken")
 const router = express.Router()
 
-
-router.delete("/", handleLogout)
-
+router.get("/", handleRefreshToken)
 
 module.exports = router
