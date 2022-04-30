@@ -1,11 +1,11 @@
 const { matchedData } = require("express-validator")
-const { usersModel } = require ("../models")
+const { usersModel, refreshModel } = require ("../models")
 const jwt = require("jsonwebtoken")
 const { encrypt, compare} = require("../utils/handlePassword")
 const { handleHttpError } = require("../utils/handleError")
 require ('dotenv')
 
-
+let refreshtoken = []
 
 const registerCtrl = async (req, res) => {
 
@@ -41,17 +41,17 @@ const loginCtrl = async (req, res) =>{
 
         const accessToken = jwt.sign(
             {
-                "username":user.name
+                "id":user.id
             },
             process.env.ACCESS_TOKEN_SECRET,
             {
-                expiresIn: '30s'
+                expiresIn: '1h'
             }
         )
 
         const refreshToken = jwt.sign(
             {
-                "username":user.name
+                "id":user.id
             },
             process.env.REFRESH_TOKEN_SECRET,
             {
@@ -59,17 +59,21 @@ const loginCtrl = async (req, res) =>{
             }
         )
 
-
+        console.log(user.id, refreshToken)
         res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000})
         res.send ({ accessToken })
+
+        const refreshtokensave = await refreshModel.create({"token":refreshToken, "userId": user.id})
+        if(!refreshtokensave){
+            handleHttpError(res, "INVALID_token", 401)
+            return
+        }
         
     } catch (e) {
         console.log(e)
         handleHttpError(res, "ERROR_LOGIN_USER") 
     }
 }
-
-
 
 
 module.exports = {registerCtrl, loginCtrl}
