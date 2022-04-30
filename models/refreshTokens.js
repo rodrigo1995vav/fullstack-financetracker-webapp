@@ -2,23 +2,17 @@ const { sequelize } = require("../config/postgres");
 const { DataTypes } = require("sequelize");
 
 const Refresh = sequelize.define(
-  "transactions",
+  "refreshToken",
   {
     token: {
       type: DataTypes.STRING,
-      allowNull: false,
-      valid_until: 10000
-    },
-    amount: {
-      type: DataTypes.FLOAT,
-    },
-    description: {
-      type: DataTypes.STRING,
+      allowNull: false
     }
   },
   {
     timestamps: true,
   }
 );
+
 
 module.exports = Refresh;
