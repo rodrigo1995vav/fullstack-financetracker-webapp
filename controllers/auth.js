@@ -5,8 +5,6 @@ const { encrypt, compare} = require("../utils/handlePassword")
 const { handleHttpError } = require("../utils/handleError")
 require ('dotenv')
 
-let refreshtoken = []
-
 const registerCtrl = async (req, res) => {
 
     try {
