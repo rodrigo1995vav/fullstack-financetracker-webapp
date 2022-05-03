@@ -1,14 +1,10 @@
-import React from "react";
+import React from 'react'
+import { Balance } from './Balance/Balance'
 
 const Home = () => {
   return (
-    <div className="Home">
-      <h1>Dashboard</h1>
-      <div>Balance</div>
-      <div>Form</div>
-      <div>List</div>
-    </div>
-  );
-};
+    <div><Balance/></div>
+  )
+}
 
-export default Home;
+export default Home

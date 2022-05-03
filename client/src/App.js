@@ -3,23 +3,23 @@ import { Routes, Route } from "react-router-dom";
 import Register from "./components/Auth/Register";
 import Home from "./components/Home/Home";
 import { Outlet } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
 import History from "./components/Operations/History";
 import Login from "./components/Auth/Login";
 
 const Layout = () => {
   return (
     <>
-      <Navbar/>
-      <Outlet />
+      <div className="glass">
+        <Outlet />
+      </div>
     </>
   );
 };
 
 function App() {
   return (
+    <div className="App">
     <Routes>
-      
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="history" element={<History />} />
@@ -27,9 +27,8 @@ function App() {
 
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-
-
     </Routes>
+    </div>
   );
 }
 
