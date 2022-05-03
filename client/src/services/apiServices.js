@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUrl = "/api/auth";
+const apiUrl = "http://localhost:3000/api/auth";
 
 
 
