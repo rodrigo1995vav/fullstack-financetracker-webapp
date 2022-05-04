@@ -22,7 +22,8 @@ const authMiddleware = async(req, res, next) => {
             process.env.ACCESS_TOKEN_SECRET,
             (err, decode) => {
                 if (err) return res.sendStatus(403)
-                req.user = decode.name
+                req.id = decode.id
+                console.log("adsda" + req.id)
                 next()
             }
         )
