@@ -13,7 +13,7 @@ router.put("/:id", updateItem )
 
 router.delete("/:id", deleteItem )
 
-router.post("/", createItem)
+router.post("/", authMiddleware, createItem)
 
 
 module.exports = router

@@ -1,6 +1,5 @@
 const { sequelize } = require("../config/postgres");
 const { DataTypes } = require("sequelize");
-const Transactions = require("./transactions");
 
 const Categories = sequelize.define(
   "categories",
@@ -11,15 +10,5 @@ const Categories = sequelize.define(
     }
   } 
 );
-
-Categories.hasMany(Transactions, {
-  foreignKey:'categoryId',
-  sourceKey:'id'
-})
-
-Transactions.belongsTo(Categories,{
-  foreignKey:'categoryId',
-  tagetId:'id'
-})
 
 module.exports = Categories;

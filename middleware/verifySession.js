@@ -23,7 +23,7 @@ const authMiddleware = async(req, res, next) => {
             (err, decode) => {
                 if (err) return res.sendStatus(403)
                 req.id = decode.id
-                console.log("adsda" + req.id)
+                console.log(req.id)
                 next()
             }
         )

@@ -35,7 +35,7 @@ const Login = () => {
         const str = email.toLowerCase();
         // Replacing " " (space) to "" empty space
         const emailOk = str.replace(/ /g, '')
-        console.log(emailOk); 
+        
 
         try {
             const response = await loginUser(
@@ -45,17 +45,18 @@ const Login = () => {
                 }
             )
             ;
-            console.log(response.data.data.user.role)
-            console.log(response.data.data.user.name)
-            console.log(response.data.data.token)
-            const accessToken = response?.data?.data?.token;
+            console.log(response); 
+            
+            const token = response?.data?.accessToken;
             //const roles = response?.data?.data.user.role;
-            const roles = ["user"]
-            const user = response.data.data.user.name
-            setAuth({ user, emailOk, roles, accessToken });
+            //const user = response.data.data.user.name
+            console.log(response.data.accessToken)
+            setAuth({ token })
+            console.log(response.data.accessToken)
+            
             setEmail('');
             setPwd('');
-            navigate('/folderlist')
+            navigate('/')
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');

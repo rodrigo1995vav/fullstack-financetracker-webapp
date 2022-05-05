@@ -1,18 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 
 section {
-  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   text-align: center;
   align-items: center;
-  max-width: 420px;
+  max-width: 400px;
   min-width: 300px;
   min-height: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 2rem;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 form {
   display: flex;
@@ -85,6 +88,7 @@ textarea {
 
 .line {
   display: inline-block;
+  margin: 1rem;
 }
 
 .flexGrow {
@@ -118,4 +122,3 @@ h3 {
   margin: 10px 0;
   color: #fff;
 }
-

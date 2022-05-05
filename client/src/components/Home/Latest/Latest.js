@@ -2,7 +2,9 @@ import React from 'react'
 
 const Latest = () => {
   return (
-    <div>Latest Operations</div>
+    <div className="">
+    <h1 className=''>History</h1>
+</div>
   )
 }
 

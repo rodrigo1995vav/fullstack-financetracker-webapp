@@ -27,30 +27,32 @@ const getItem = async(req, res) =>{
 const createItem = async (req, res) =>{
 
     try {
+        req.body.userId = 1
         const body= req.body
         console.log(body)
-        const data = await categoriesModel.create(body)
+        const data = await transactionsModel.create(body)
         res.send(data)
     } catch (e) {
-        handleHttpError(res, 'ERROR_CREATE_ITEMS')
+        handleHttpError(res, 'ERROR_CREATE_ITEMSss')
     }
 }
 
 const updateItem = async(req, res) =>{
     try {
         const {id, ...body}= matchedData(req)
-        const data = await categoriesModel.findOneAndUpdate(id, body)
+        const data = await transactionsModel.findOneAndUpdate(id, body)
         res.send({data})
     } catch (e) {
         handleHttpError(res, 'ERROR_UPDATE_ITEMS')
     }
 
 }
+
 const deleteItem = async (req, res) =>{
     try {
         req = matchedData(req)
         const {id} = req
-        const data = await categoriesModel.delete({_id:id})
+        const data = await transactionsModel.delete({id:id})
         res.send({data}) 
     } catch (e) {
         handleHttpError(res, "ERROR_DELETE_ITEM")

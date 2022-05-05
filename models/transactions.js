@@ -4,15 +4,17 @@ const { DataTypes } = require("sequelize");
 const Transactions = sequelize.define(
   "transactions",
   {
-    title: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     amount: {
       type: DataTypes.FLOAT,
     },
     description: {
       type: DataTypes.STRING,
+    },
+    category: {
+      type: DataTypes.STRING
+    },
+    type:{
+      type: DataTypes.STRING
     }
   },
   {

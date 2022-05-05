@@ -16,29 +16,18 @@ const Users = sequelize.define(
     password: {
       type: DataTypes.STRING,
     },
-    role: {
-      type: DataTypes.ENUM,
-      values: ["user", "admin"],
-      defaultValue: "user"
-    },
   },
   {
     timestamps: true,
   }
 );
 
-Users.hasMany(Transactions, {
-  foreignKey: 'userId',
-  sourceKey: 'id'
-})
+Users.hasMany(Transactions)
 
-
-Transactions.belongsTo(Users, {
-    foreignKey: 'userId',
-    targetId: 'id'
-})
+Transactions.belongsTo(Users)
 
 Users.hasOne(Refresh)
+
 Refresh.belongsTo(Users)
 
 module.exports = Users;
