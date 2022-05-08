@@ -12,12 +12,12 @@ const getItems =  async(req,res) => {
     }
 }
 
-const getItem = async(req, res) =>{
+const getLastTen = async(req, res) =>{
     try {
         //req = matchedData(req)
         const id = req.params.id
         console.log(id)
-        const data = await transactionsModel.findByPk(id)
+        const data = await transactionsModel.findAll({limit: 10, where:{userId:req.id}})
         res.send({data}) 
     } catch (e) {
         handleHttpError(res, "ERROR_GET_ITEM")
@@ -38,10 +38,10 @@ const createItem = async (req, res) =>{
 }
 
 const updateItem = async(req, res) =>{
-    try {
-        const {id, ...body}= matchedData(req)
-        const data = await transactionsModel.findOneAndUpdate(id, body)
-        res.send({data})
+    try { 
+        const data = await transactionsModel.update(req.body,
+        { where: { id: req.params.id }, returning: true })
+        res.send(data[1])
     } catch (e) {
         handleHttpError(res, 'ERROR_UPDATE_ITEMS')
     }
@@ -52,7 +52,7 @@ const deleteItem = async (req, res) =>{
     try {
         req = matchedData(req)
         const {id} = req
-        const data = await transactionsModel.delete({id:id})
+        const data = await transactionsModel.destroy({where:{id:id}})
         res.send({data}) 
     } catch (e) {
         handleHttpError(res, "ERROR_DELETE_ITEM")
@@ -60,4 +60,4 @@ const deleteItem = async (req, res) =>{
 }
 
 
-module.exports = { getItems, getItem, createItem, updateItem, deleteItem}
+module.exports = { getItems, getLastTen, createItem, updateItem, deleteItem}

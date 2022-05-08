@@ -9,11 +9,8 @@ export function loginUser(body) {
   return axios.post(apiUrl + "/auth/login", body);
 }
 
-export function getCategories() {
-  return axios.get(apiUrl + "/categories");
-}
 
-export function createTrasaction(transaction, token) {
+export function createTransaction(transaction, token) {
   return axios.post(apiUrl + "/transactions", transaction, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -22,9 +19,34 @@ export function createTrasaction(transaction, token) {
 }
 
 export function getTransactions(token) {
-  return axios.get(apiUrl + "/Transactions", {
+  return axios.get(apiUrl + "/transactions", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
+}
+
+export function getLatest(token) {
+  return axios.get(apiUrl + "/transactions/latest", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+
+export function update(id, transaction, token) {
+    return axios.put(apiUrl + "/transactions/" + id, transaction, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+}
+
+export function deleteTransaction(id,token) {
+    return axios.delete(apiUrl + "/transactions/" + id,{
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 }

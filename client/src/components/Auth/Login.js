@@ -7,7 +7,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 
 const Login = () => {
-    const { setAuth } = useAuth();
+    const { auth, setAuth } = useAuth();
 
 
     const navigate = useNavigate()
@@ -51,12 +51,12 @@ const Login = () => {
             //const roles = response?.data?.data.user.role;
             //const user = response.data.data.user.name
             console.log(response.data.accessToken)
-            setAuth({ token })
-            console.log(response.data.accessToken)
+            setAuth( token )
+            console.log(auth)
             
             setEmail('');
             setPwd('');
-            navigate('/')
+            navigate('/operations')
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');

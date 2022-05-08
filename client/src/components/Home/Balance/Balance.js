@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
-import { getTransactions} from '../../../services/apiServices'
+import { getTransactions } from "../../../services/apiServices";
+import './Balance.css'
+
 
 //Money formatter function
 function moneyFormatter(num) {
@@ -19,49 +21,40 @@ function moneyFormatter(num) {
   );
 }
 
-
-
-
 export const Balance = () => {
-  const { auth, setAuth } = useAuth();
+  const { auth } = useAuth();
 
-  const [ expense, setExpense] = useState(0)
-
-  const [ income, setIncome ] = useState(0)
-
-  const [ currentBalance, setCurrentBalance] = useState(0)
-
+  const [currentBalance, setCurrentBalance] = useState(0);
 
   useEffect(() => {
-    totalBalance()
-  },[])
+    totalBalance();
+  }, []);
 
-  const totalBalance = async() => {
+  const totalBalance = async () => {
+    try {
+      console.log(auth);
+      const data = await getTransactions(auth);
+      const allOperations = await data.data.data;
+      let tempExpense = 0;
+      let tempIncome = 0;
+      console.log(allOperations);
+      allOperations.map((op) => {
+        if (op.type === "Expense") tempExpense += op.amount;
+        if (op.type === "Income") tempIncome += op.amount;
+        else tempExpense += op.amount;
+      });
+      setCurrentBalance(tempIncome - tempExpense);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   
-    const data = await getTransactions(auth.token)
-    const allOperations = data.data.data
-    let tempExpense = 0
-    let tempIncome = 0
-    console.log(allOperations)
-    allOperations.map(op => {
-      if (op.type === "Expense") tempExpense += op.amount 
-      if (op.type === "Income") tempIncome += op.amount
-    })
-    setCurrentBalance(tempIncome-tempExpense)
-    setExpense(tempExpense)
-
-  
-  }
-
   return (
-    <div>
-      
-      <div>
-      <h1>Your Balancess = {moneyFormatter(currentBalance)}</h1>
+    <div className="container">
+      <div className="balance-show">
+        <h1>Your Balance = {moneyFormatter(currentBalance)}</h1>
       </div>
-      <div></div>
-      <div></div>
     </div>
-    
   );
 };

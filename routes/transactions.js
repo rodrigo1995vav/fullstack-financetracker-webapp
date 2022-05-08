@@ -1,17 +1,17 @@
 const express = require ("express")
 const router = express.Router()
-const {getItems, getItem, createItem, updateItem, deleteItem} = require ("../controllers/transactions")
+const {getItems, getLastTen, createItem, updateItem, deleteItem} = require ("../controllers/transactions")
 const authMiddleware = require("../middleware/verifySession")
 
 
 
 router.get("/", authMiddleware, getItems)
 
-router.get("/:id", getItem)
+router.get("/latest", authMiddleware, getLastTen)
 
-router.put("/:id", updateItem )
+router.put("/:id", authMiddleware, updateItem )
 
-router.delete("/:id", deleteItem )
+router.delete("/:id", authMiddleware, deleteItem )
 
 router.post("/", authMiddleware, createItem)
 

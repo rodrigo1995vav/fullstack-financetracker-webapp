@@ -3,8 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import Register from "./components/Auth/Register";
 import Home from "./components/Home/Home";
 import { Outlet } from "react-router-dom";
-import History from "./components/Operations/History";
 import Login from "./components/Auth/Login";
+import ABM from "./components/Operations/ABM";
 
 const Layout = () => {
   return (
@@ -19,15 +19,17 @@ const Layout = () => {
 function App() {
   return (
     <div className="App">
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="history" element={<History />} />
-      </Route>
+      <div className="AppGlass">
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="operations" element={<ABM />} />
+        </Route>
 
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-    </Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      </div>
     </div>
   );
 }

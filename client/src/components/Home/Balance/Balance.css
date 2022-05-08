@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.balance-show {
+    height: 7rem !important;
+    border-radius: 0.7rem;
+    background-color: forestgreen;
+    color: white;
+    padding: 1rem;
+    max-width: 600px;
+  }

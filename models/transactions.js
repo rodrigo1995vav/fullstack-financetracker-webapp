@@ -15,10 +15,10 @@ const Transactions = sequelize.define(
     },
     type:{
       type: DataTypes.STRING
+    },
+    operationDate:{
+      type: DataTypes.DATEONLY
     }
-  },
-  {
-    timestamps: true,
   }
 );
 

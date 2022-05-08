@@ -22,7 +22,7 @@ const sequelize = new Sequelize(
 const dbConnectPostgres = async () =>{
     try {
         await sequelize.authenticate()
-        await sequelize.sync({ alter: true})
+        await sequelize.sync({})
         console.log("Connection succed")
     } catch (e) {
         console.log("Connection ERROR", e)
