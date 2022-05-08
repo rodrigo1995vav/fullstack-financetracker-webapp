@@ -8,17 +8,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import "./Latest.css";
 import { getLatest, getTransactions } from "../../../services/apiServices";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 function createData(name, trackingId, date, status) {
   return { name, trackingId, date, status };
 }
-
-const rows = [
-  createData("Lasania Chiken Fri", 18908424, "2 March 2022", "Income"),
-  createData("Big Baza Bang ", 18908424, "2 March 2022", "Expense"),
-  createData("Mouth Freshner", 18908424, "2 March 2022", "Approved"),
-  createData("Cupcake", 18908421, "2 March 2022", "Delivered"),
-];
 
 const makeStyle = (status) => {
   if (status === "Income") {
@@ -42,13 +36,14 @@ const makeStyle = (status) => {
 export default function BasicTable() {
   const { auth } = useAuth();
   const [operations, setOperations] = useState([])
-
+  const axiosPrivate = useAxiosPrivate()
   useEffect(() => {
     list();
   }, []);
 
   const list = async () => {
-    const data = await getLatest(auth);
+    const data = await axiosPrivate.get("/transactions/latest")
+    //const data = await getLatest(auth);
     setOperations(data.data.data);
   };
 

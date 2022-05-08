@@ -39,11 +39,7 @@ export function createTransaction(transaction, token) {
 }
 
 export function getTransactions(token) {  
-  return axios.get(apiUrl + "/transactions", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return axios.get("/transactions");
 }
 
 export function getLatest(token) {
