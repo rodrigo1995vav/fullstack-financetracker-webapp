@@ -43,7 +43,7 @@ export function update(id, transaction, token) {
     });
 }
 
-export function deleteTransaction(id,token) {
+export function deleteT(id,token) {
     return axios.delete(apiUrl + "/transactions/" + id,{
         headers: {
             'Authorization': `Bearer ${token}`

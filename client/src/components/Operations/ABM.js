@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import "./ABM.css";
 import useAuth from "../../hooks/useAuth";
-import { createTransaction, getTransactions, update } from "../../services/apiServices";
+import { createTransaction, getTransactions, update, deleteT } from "../../services/apiServices";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -123,6 +123,10 @@ const ABM = () => {
 
   const deleteTransaction=async()=>{
     console.log("delete")
+    await deleteT(form.id, auth)
+    setData(data.filter(console=>console.id!==form.id));
+    openCloseModalDelete();
+
   }
 
 
@@ -238,7 +242,7 @@ const ABM = () => {
           <Button color="primary" onClick={() => postTransaction()}>
             Save
           </Button>
-          <Button onClick={() => openCloseModalEdit()}>Cancel</Button>
+          <Button onClick={() => openCloseModalInsert()}>Cancel</Button>
         </div>
       </div>
     </LocalizationProvider>
