@@ -16,7 +16,7 @@
       margin: 0;
   }
   
-  /* .App {
+  .App {
 
     color: var(--black);
     background: linear-gradient(
@@ -53,4 +53,8 @@
     .AppGlass{
       grid-template-columns: 1fr;
     } 
-  } */
+  }
+
+  .Outlet {
+    padding: 2rem;
+  }

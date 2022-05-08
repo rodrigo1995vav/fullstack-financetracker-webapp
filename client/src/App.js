@@ -5,11 +5,14 @@ import Home from "./components/Home/Home";
 import { Outlet } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import ABM from "./components/Operations/ABM";
+import Navbar from "./components/Navbar/Navbar";
+
 
 const Layout = () => {
   return (
     <>
-      <div className="glass">
+      <div className="Outlet">
+        <Navbar/>
         <Outlet />
       </div>
     </>
