@@ -23,6 +23,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { categories } from "../../data/categories";
+import SearchIcon from '@mui/icons-material/Search';
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -184,6 +185,17 @@ const ABM = () => {
     setType(values[1]);
   };
 
+  const handleFilter = async (e) => {
+    const value = e.target.value.split('.')[0];
+    if (value !== "All") {
+    const temp = await getTransactions(auth)
+    const val = temp.data.data.filter(item=>item.category==value)
+    setData(val)
+    console.log(val)
+    } else getData()
+    
+  };
+
   const bodyInsert = (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div className={styles.modal}>
@@ -288,6 +300,28 @@ const ABM = () => {
       <br />
       <Button onClick={() => openCloseModalInsert()}>Add</Button>
       <br />
+      <SearchIcon/>
+      <FormControl className={styles.inputMaterial}>
+          <InputLabel htmlFor="grouped-native-select">
+            Select category...
+          </InputLabel>
+          <Select
+            className={styles.inputMaterial}
+            onChange={(e) => handleFilter(e)}
+            native
+            defaultValue="All"
+            id="grouped-native-select"
+            label="Grouping"
+          >
+            <option label="All" value="All" />
+            <optgroup label="Expense">
+              <>{categories.map((cat) => dropDownExpense(cat))}</>
+            </optgroup>
+            <optgroup label="Income">
+              <>{categories.map((cat) => dropDownIncome(cat))}</>
+            </optgroup>
+          </Select>
+        </FormControl>
       <br />
       <TableContainer>
         <Table>
