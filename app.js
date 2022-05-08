@@ -12,7 +12,7 @@ const cookieParser = require("cookie-parser")
 
 const port = process.env.PORT || 3000
 
-app.use(cors())
+app.use(cors({ credentials: true, origin: "http://localhost:3001" }))
 
 app.use(express.json())
 

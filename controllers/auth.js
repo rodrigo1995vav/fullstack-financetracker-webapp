@@ -43,7 +43,7 @@ const loginCtrl = async (req, res) =>{
             },
             process.env.ACCESS_TOKEN_SECRET,
             {
-                expiresIn: '1d'
+                expiresIn: '10s'
             }
         )
 
@@ -58,8 +58,8 @@ const loginCtrl = async (req, res) =>{
         )
 
         console.log(user.id, refreshToken)
-        res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24*60*60*1000})
-        res.send ({ accessToken })
+        res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None' , maxAge: 24 * 60 * 60 * 1000})
+        res.send ({ accessToken, refreshToken })
 
         const refreshtokensave = await refreshModel.create({"token":refreshToken, "userId": user.id})
         if(!refreshtokensave){

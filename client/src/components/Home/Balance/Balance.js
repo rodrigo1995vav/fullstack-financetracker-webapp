@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import { getTransactions } from "../../../services/apiServices";
 import './Balance.css'
-
+import useRefreshToken from "../../../hooks/useRefreshToken";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 //Money formatter function
 function moneyFormatter(num) {
@@ -23,17 +24,21 @@ function moneyFormatter(num) {
 
 export const Balance = () => {
   const { auth } = useAuth();
+  const refresh = useRefreshToken()
+  const axiosPrivate = useAxiosPrivate()
+
 
   const [currentBalance, setCurrentBalance] = useState(0);
 
   useEffect(() => {
+
     totalBalance();
   }, []);
 
   const totalBalance = async () => {
     try {
       console.log(auth);
-      const data = await getTransactions(auth);
+      const data = await axiosPrivate.get("/transactions")
       const allOperations = await data.data.data;
       let tempExpense = 0;
       let tempIncome = 0;
@@ -54,6 +59,7 @@ export const Balance = () => {
     <div className="container">
       <div className="balance-show">
         <h1>Your Balance = {moneyFormatter(currentBalance)}</h1>
+        <button onClick={() => refresh()}>Refresh Token</button>
       </div>
     </div>
   );

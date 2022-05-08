@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, useContext } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { loginUser } from '../../services/apiServices';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import Cookies from "js-cookie"
 
 
 
@@ -45,18 +46,19 @@ const Login = () => {
                 }
             )
             ;
-            console.log(response); 
+            console.log(response);
+            
+            //refreshToken should be saved as httpOnly for security, not able to do that due to domain between server and client not equal
+            Cookies.set('jwt', response.data.refreshToken)
             
             const token = response?.data?.accessToken;
-            //const roles = response?.data?.data.user.role;
-            //const user = response.data.data.user.name
             console.log(response.data.accessToken)
             setAuth( token )
             console.log(auth)
             
             setEmail('');
             setPwd('');
-            navigate('/operations')
+            navigate('/')
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');

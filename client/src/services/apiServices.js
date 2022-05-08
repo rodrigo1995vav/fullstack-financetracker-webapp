@@ -1,5 +1,13 @@
 import axios from "axios";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+
+
+axios.defaults.withCredentials = true
+
 const apiUrl = "http://localhost:3000/api";
+//const priv = useAxiosPrivate()
+
+
 
 export function registerUser(body) {
   return axios.post(apiUrl + "/auth/register", body);
@@ -9,6 +17,18 @@ export function loginUser(body) {
   return axios.post(apiUrl + "/auth/login", body);
 }
 
+export function refreshToken() {
+  return axios.post(apiUrl + "/refresh", {
+    withCredentials: true, 
+    headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+  });
+}
+
+export const axiosPrivate = axios.create({
+  baseURL: apiUrl,
+  headers: { 'Content-Type': 'application/json' },
+  withCredentials: true
+});
 
 export function createTransaction(transaction, token) {
   return axios.post(apiUrl + "/transactions", transaction, {
@@ -18,7 +38,7 @@ export function createTransaction(transaction, token) {
   });
 }
 
-export function getTransactions(token) {
+export function getTransactions(token) {  
   return axios.get(apiUrl + "/transactions", {
     headers: {
       Authorization: `Bearer ${token}`,
