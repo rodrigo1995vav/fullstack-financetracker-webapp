@@ -7,12 +7,11 @@ import Login from "./components/Auth/Login";
 import ABM from "./components/Operations/ABM";
 import Navbar from "./components/Navbar/Navbar";
 
-
 const Layout = () => {
   return (
     <>
       <div className="Outlet">
-        <Navbar/>
+        <Navbar />
         <Outlet />
       </div>
     </>
@@ -23,15 +22,14 @@ function App() {
   return (
     <div className="App">
       <div className="AppGlass">
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="operations" element={<ABM />} />
-        </Route>
-
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="operations" element={<ABM />} />
+          </Route>
+        </Routes>
       </div>
     </div>
   );

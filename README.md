@@ -1,3 +1,8 @@
+# WebApp built for the FullStack challange from Alkemy
+   This project is far from finished but is the farthest I could come given the amount of time I had in my hands.
+   Hopefully is enough to advance the next stage
+
+
 # Expense-Income Tracker with JWT/Auth 
    At the WebApp you can see your current balance, you can create transactions as well you are able to edit and delete. 
    This project was built using: -ReactJS (v18.1.0) -NodeJS (v17.7.2 ) -Express(v4.18.1) -Sequelize (V6.19.0)
@@ -38,3 +43,12 @@ I will try to upload this project to Heroku now that they have local postrgesql 
 # Mean while you can check this To-do app fully functional
 
     https://todo-auth-mern.herokuapp.com/login
+
+
+# Images of the running app
+
+![My Remote Image](https://imgur.com/Mk3OFqi)
+
+![My Remote Image](https://imgur.com/4Ir9HOu)
+
+![My Remote Image](https://imgur.com/eZbrOXQ)
