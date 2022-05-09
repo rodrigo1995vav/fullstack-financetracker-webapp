@@ -47,8 +47,9 @@ I will try to upload this project to Heroku now that they have local postrgesql 
 
 # Images of the running app
 
-![My Remote Image](https://imgur.com/Mk3OFqi)
 
-![My Remote Image](https://imgur.com/4Ir9HOu)
+<img src="https://imgur.com/Mk3OFqi">
 
-![My Remote Image](https://imgur.com/eZbrOXQ)
+<img src="https://imgur.com/4Ir9HOu">
+
+<img src="https://imgur.com/eZbrOXQ">
