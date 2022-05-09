@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import "./ABM.css";
 import useAuth from "../../hooks/useAuth";
-import { createTransaction, getTransactions, update, deleteT } from "../../services/apiServices";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -23,7 +22,6 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { categories } from "../../data/categories";
-import SearchIcon from '@mui/icons-material/Search';
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
@@ -32,7 +30,8 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 const useStyles = makeStyles((theme) => ({
   modal: {
     position: "absolute",
-    width: 400,
+    maxWidth: 400,
+    minWidth: 300,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -123,18 +122,19 @@ const ABM = () => {
     setData(temp.data.data);
   };
   const postTransaction = async () => {
-    console.log(auth)
-    await axiosPrivate.post("/transactions",form);
+    console.log(auth);
+    const response = await axiosPrivate.post("/transactions", form);
+    console.log(response);
     setData(data.concat(form));
     openCloseModalInsert();
   };
 
   const updateTransaction = async () => {
-    console.log(form.id)
+    console.log(form.id);
     const response = await axiosPrivate.put("/transactions/" + form.id, form);
     console.log(response.data[0]);
-    const tempData = response.data[0]
-    var newData = data
+    const tempData = response.data[0];
+    var newData = data;
     newData.map((console) => {
       if (tempData.id === console.id) {
         console.amount = tempData.amount;
@@ -146,17 +146,14 @@ const ABM = () => {
     setData(newData);
     openCloseModalEdit();
   };
-  
 
-  const deleteTransaction=async()=>{
-    console.log("delete")
-    console.log(auth.accessToken)
-    await axiosPrivate.delete("/transactions/" + form.id)
-    setData(data.filter(console=>console.id!==form.id));
+  const deleteTransaction = async () => {
+    console.log("delete");
+    console.log(auth.accessToken);
+    await axiosPrivate.delete("/transactions/" + form.id);
+    setData(data.filter((console) => console.id !== form.id));
     openCloseModalDelete();
-
-  }
-
+  };
 
   const openCloseModalInsert = () => {
     setModalInsert(!modalInsert);
@@ -166,15 +163,14 @@ const ABM = () => {
     setModalEdit(!modalEdit);
   };
 
-  const openCloseModalDelete=()=>{
+  const openCloseModalDelete = () => {
     setModalDelete(!modalDelete);
-  }
+  };
 
-
-  const selectForm=(field, op)=>{
+  const selectForm = (field, op) => {
     setForm(field);
-    (op ==='Edit')?openCloseModalEdit():openCloseModalDelete()
-  }
+    op === "Edit" ? openCloseModalEdit() : openCloseModalDelete();
+  };
 
   const dropDownExpense = (cat) => {
     if (cat.type === "Expense") {
@@ -213,26 +209,26 @@ const ABM = () => {
   };
 
   const handleFilter = async (e) => {
-    const value = e.target.value.split('.')[0];
+    const value = e.target.value.split(".")[0];
     if (value !== "All") {
-    const temp = await axiosPrivate.get("/transactions");
-    const val = temp.data.data.filter(item=>item.category==value)
-    setData(val)
-    console.log(val)
-    } else getData()
-    
+      const temp = await axiosPrivate.get("/transactions");
+      const val = temp.data.data.filter((item) => item.category == value);
+      setData(val);
+      console.log(val);
+    } else getData();
   };
 
   const bodyInsert = (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div className={styles.modal}>
-        <Typography >Add New Transaction</Typography>
+        <Typography>Add New Transaction</Typography>
         <br />
         <FormControl className={styles.inputMaterial}>
           <InputLabel htmlFor="grouped-native-select">
             Select category...
           </InputLabel>
           <Select
+            required
             className={styles.inputMaterial}
             onChange={(e) => handleSelectChange(e)}
             native
@@ -248,41 +244,42 @@ const ABM = () => {
               <>{categories.map((cat) => dropDownIncome(cat))}</>
             </optgroup>
           </Select>
+          <br />
+          <TextField
+            required
+            name="amount"
+            type="number"
+            className={styles.inputMaterial}
+            label="$0"
+            onChange={handleChange}
+          />
+          <br />
+          <TextField
+            required
+            name="description"
+            className={styles.inputMaterial}
+            label="Description"
+            onChange={handleChange}
+          />
+          <br />
+          <br />
+          <MobileDatePicker
+            label="Transaction Date"
+            value={date}
+            onChange={(newValue) => {
+              setDate(newValue);
+              console.log(date);
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+          <br />
+          <div align="right">
+            <Button color="primary" onClick={() => postTransaction()}>
+              Save
+            </Button>
+            <Button onClick={() => openCloseModalInsert()}>Cancel</Button>
+          </div>
         </FormControl>
-        <br />
-        <TextField
-          required
-          name="amount"
-          type="number"
-          className={styles.inputMaterial}
-          label="Amount"
-          onChange={handleChange}
-        />
-        <br />
-        <TextField
-          name="description"
-          className={styles.inputMaterial}
-          label="Description"
-          onChange={handleChange}
-        />
-        <br />
-        <br />
-        <MobileDatePicker
-          label="Transaction Date"
-          value={date}
-          onChange={(newValue) => {
-            setDate(newValue);
-            console.log(date);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-        <br />
-        <div align="right">
-          <Button color="primary" onClick={() => postTransaction()}>
-            Save
-          </Button>
-          <Button onClick={() => openCloseModalInsert()}>Cancel</Button>
-        </div>
       </div>
     </LocalizationProvider>
   );
@@ -310,29 +307,31 @@ const ABM = () => {
     </div>
   );
 
-  const bodyDelete=(
+  const bodyDelete = (
     <div className={styles.modal}>
-      <p>Estás seguro que deseas eliminar la consola <b>{form && form.id}</b> ? </p>
+      <p>
+        Estás seguro que deseas eliminar la consola <b>{form && form.id}</b> ?{" "}
+      </p>
       <div align="right">
-        <Button color="secondary" onClick={()=>deleteTransaction()} >Sí</Button>
-        <Button onClick={()=>openCloseModalDelete()}>No</Button>
-
+        <Button color="secondary" onClick={() => deleteTransaction()}>
+          Sí
+        </Button>
+        <Button onClick={() => openCloseModalDelete()}>No</Button>
       </div>
-
     </div>
-  )
+  );
 
   return (
     <div className="ABM">
       <br />
-      <Button variant="contained" onClick={() => openCloseModalInsert()}>New Operation</Button>
+      <Button variant="contained" onClick={() => openCloseModalInsert()}>
+        New Operation
+      </Button>
       <br />
-      <Box sx={{ flexGrow: 0, display: 'flex',
-          flexDirection: 'row',
-          p: 1,
-          m: 1 }}>
-
-      <FormControl>
+      <Box
+        sx={{ flexGrow: 0, display: "flex", flexDirection: "row", p: 1, m: 1 }}
+      >
+        <FormControl>
           <InputLabel htmlFor="grouped-native-select">
             Select category...
           </InputLabel>
@@ -353,38 +352,43 @@ const ABM = () => {
             </optgroup>
           </Select>
         </FormControl>
-        </Box>
+      </Box>
       <br />
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell>Actions</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Amount</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Type</TableCell>
               <TableCell>Description</TableCell>
-              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((field) => (
               <TableRow key={field.id}>
-                <TableCell>{field.category}</TableCell>
-                <TableCell>{field.amount}</TableCell>
-                <TableCell>{field.operationDate}</TableCell>
-                <TableCell><span className="status" style={makeStyle(field.type)}>
-                    {field.type}
-                  </span></TableCell>
-                <TableCell>{field.description}</TableCell>
                 <TableCell>
                   <Edit
                     className={styles.icons}
                     onClick={() => selectForm(field, "Edit")}
                   />
                   &nbsp;&nbsp;&nbsp;
-                  <Delete className={styles.icons} onClick={()=>selectForm(field, 'Delete')} />
+                  <Delete
+                    className={styles.icons}
+                    onClick={() => selectForm(field, "Delete")}
+                  />
                 </TableCell>
+                <TableCell>{field.category}</TableCell>
+                <TableCell>{field.amount}</TableCell>
+                <TableCell>{field.operationDate}</TableCell>
+                <TableCell>
+                  <span className="type" style={makeStyle(field.type)}>
+                    {field.type}
+                  </span>
+                </TableCell>
+                <TableCell>{field.description}</TableCell>
               </TableRow>
             ))}
           </TableBody>

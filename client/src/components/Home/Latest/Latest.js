@@ -5,6 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { format } from "../../../utils/moneyFormatter";
 
 import "./Latest.css";
 
@@ -66,7 +67,7 @@ export default function BasicTable() {
                 <TableCell component="th" scope="row">
                   {row.category}
                 </TableCell>
-                <TableCell align="left">{row.amount}</TableCell>
+                <TableCell align="left">{format(row.amount)}</TableCell>
                 <TableCell align="left">{row.operationDate}</TableCell>
                 <TableCell align="left">
                   <span className="status" style={makeStyle(row.type)}>

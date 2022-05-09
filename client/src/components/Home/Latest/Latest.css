@@ -1,15 +1,3 @@
-.MuiTableRow-root > * {
-    padding: 10px;
-  }
-  
-  .MuiTableRow-root.MuiTableRow-head > * {
-    font-weight: bold !important;
-  }
-  
- 
-  .Table:first-child {
-    border-radius: 0.7rem !important;
-  }
   .status {
     padding: 8px;
     border-radius: 8px;
@@ -33,7 +21,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 23rem;
     }
   }
 

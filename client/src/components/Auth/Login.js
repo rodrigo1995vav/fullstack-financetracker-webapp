@@ -3,6 +3,7 @@ import useAuth from '../../hooks/useAuth';
 import { loginUser } from '../../services/apiServices';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Cookies from "js-cookie"
+import './Auth.css'
 
 
 
@@ -76,10 +77,11 @@ const Login = () => {
     return (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Sign In</h1>
-                    <form onSubmit={handleSubmit}>
+                    <h1 className='header-auth'>Sign In</h1>
+                    <form className='auth-form' onSubmit={handleSubmit}>
                         <label htmlFor="email">User email:</label>
                         <input
+                            className='text'
                             type="text"
                             id="email"
                             ref={userRef}
@@ -91,19 +93,20 @@ const Login = () => {
 
                         <label htmlFor="password">Password:</label>
                         <input
+                            className='pwd'
                             type="password"
                             id="password"
                             onChange={(e) => setPwd(e.target.value)}
                             value={pwd}
                             required
                         />
+                        
                         <button className="logout">Sign In</button>
                     </form>
                     <p>
                         Need an Account?<br />
                         <span className="line">
-                            {/*put router link here*/}
-                            <Link to="/register">Sign Up</Link>
+                            <Link style={{ color: 'black' }} to="/register">Sign Up</Link>
                         </span>
                     </p>
                 </section>

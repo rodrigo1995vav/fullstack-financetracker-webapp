@@ -117,7 +117,7 @@ const Register = () => {
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Register</h1>
+                    <h1 className='header-auth'>Register</h1>
                     <form onSubmit={handleSubmit}>
                         <label htmlFor="username">
                             Username:
@@ -125,6 +125,7 @@ const Register = () => {
                             <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
                         </label>
                         <input
+                        className="text"
                             type="text"
                             id="username"
                             ref={userRef}
@@ -150,6 +151,7 @@ const Register = () => {
                             <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
                         </label>
                         <input
+                        className="text"
                             type="text"
                             id="email"
                             autoComplete="off"
@@ -174,6 +176,7 @@ const Register = () => {
                             <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
                         </label>
                         <input
+                        className="pwd"
                             type="password"
                             id="password"
                             onChange={(e) => setPwd(e.target.value)}
@@ -198,6 +201,7 @@ const Register = () => {
                             <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
                         </label>
                         <input
+                        className="pwd"
                             type="password"
                             id="confirm_pwd"
                             onChange={(e) => setMatchPwd(e.target.value)}
@@ -212,13 +216,13 @@ const Register = () => {
                             <FontAwesomeIcon icon={faInfoCircle} />
                             Must match the first password input field.
                         </p>
-
+                        <br/>
                         <button className="logout" disabled={!validName || !validPwd || !validMatch || !validEmail ? true : false}>Sign Up</button>
                     </form>
                     <p>
                         Already registered?<br />
                         <span className="line">                            
-                            <Link to="/login">Sign In</Link>
+                            <Link style={{ color: 'black' }} to="/login">Sign In</Link>
                         </span>
                     </p>
                 </section>

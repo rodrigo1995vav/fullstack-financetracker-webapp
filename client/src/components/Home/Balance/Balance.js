@@ -12,23 +12,8 @@ import CardContent from "@mui/material/CardContent";
 
 import Typography from "@mui/material/Typography";
 
+import { format } from "../../../utils/moneyFormatter";
 
-//Money formatter function
-function moneyFormatter(num) {
-  let p = num.toFixed(2).split(".");
-  return (
-    "$ " +
-    (p[0].split("")[0] === "-" ? "-" : "") +
-    p[0]
-      .split("")
-      .reverse()
-      .reduce(function (acc, num, i, orig) {
-        return num === "-" ? acc : num + (i && !(i % 3) ? "," : "") + acc;
-      }, "") +
-    "." +
-    p[1]
-  );
-}
 
 export const Balance = () => {
   const { auth } = useAuth();
@@ -43,16 +28,15 @@ export const Balance = () => {
   const totalBalance = async () => {
     try {
       console.log(auth);
-      const data = await axiosPrivate.get("/transactions/latest");
+      const data = await axiosPrivate.get("/transactions");
 
-      const allOperations = await data.data.data;
+      const allOperations = data.data.data;
       let tempExpense = 0;
       let tempIncome = 0;
       console.log(allOperations);
       allOperations.map((op) => {
         if (op.type === "Expense") tempExpense += op.amount;
         if (op.type === "Income") tempIncome += op.amount;
-        else tempExpense += op.amount;
       });
       setCurrentBalance(tempIncome - tempExpense);
     } catch (error) {
@@ -68,7 +52,7 @@ export const Balance = () => {
           Your Balance
         </Typography>
         <Typography sx={{ marginRight: "10%", marginBottom:"10px"}}variant="h5" component="div" align="right">
-        {moneyFormatter(currentBalance)}
+        {format(currentBalance)}
         </Typography>
         <Typography sx={{fontSize: 14 }} color="text.secondary" align="left">
           Current money available
