@@ -4,6 +4,7 @@ const handleLogout = async (req, res) => {
     //TODO On client, also delete the accessToken
 
     const cookies = req.cookies;
+    console.log(cookies)
     if (!cookies?.jwt) return res.sendStatus(204); //No content
     const refreshToken = cookies.jwt;
 

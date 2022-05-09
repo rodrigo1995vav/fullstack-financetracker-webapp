@@ -7,69 +7,64 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
+import { Link, useNavigate } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import Cookies from "js-cookie"
-import useLogout from "../../hooks/useLogout";
 
-const pages = ["Home", "Operations"];
+const pages = ["Home", "ABM Operations"];
 
-
-
-const ResponsiveAppBar = () => {
+const Navbar = () => {
   const navigate = useNavigate();
-  const signout = useLogout() 
-
-  const { auth, setAuth } = useAuth();
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
+    if (page == "Home") navigate("/");
   };
 
-  const handleNavigate = (page) => {
-    if (page.target.value == "Home") navigate("/");
-    if (page.target.value == "Operations") navigate("/operations");
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
-  const handleNavMenu = (e) => {
-    if (e.target.textContent == "Home") navigate("/");
-    if (e.target.textContent == "Operations") navigate("/operations");
-  };
-
-  const handleLogout = async() => {
-    await signout()
-    Cookies.remove('jwt')
+  const handleLogout = () => {
     navigate("/login")
   }
+  const handleNavigate = (page) => {
+    if (page.target.value === "Home") navigate("/");
+    if (page.target.value === "ABM Operations") navigate("/operations");
+ 
+
+  };
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AccountBalanceWalletIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
+          <AccountBalanceWalletIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href={"/"}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".1rem",
+              letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
             }}
@@ -106,21 +101,18 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem key="Ho" onClick={handleCloseNavMenu}>
-                <Typography onClick={handleNavMenu} textAlign="center">
-                  Home
-                </Typography>
-              </MenuItem>
-              <MenuItem key="Op" onClick={handleCloseNavMenu}>
-                <Typography onClick={handleNavMenu} textAlign="center">
-                  Operations
-                </Typography>
-              </MenuItem>
+              {pages.map((page) => (
+                <MenuItem
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography textAlign="center" onClick={(page)=>handleNavigate(page)}>{page}</Typography>
+
+                </MenuItem>
+              ))}
             </Menu>
           </Box>
-          <AccountBalanceWalletIcon
-            sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-          />
+          <AccountBalanceWalletIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -144,29 +136,22 @@ const ResponsiveAppBar = () => {
               <Button
                 key={page}
                 value={page}
-                onClick={(e) => {
-                  handleCloseNavMenu(e);
-                  handleNavigate(e);
-                }}
+                //onClick={handleCloseNavMenu}
+                onClick={(e)=>handleNavigate(e)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
               </Button>
             ))}
           </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
-            <Button variant="contained" startIcon={<LogoutIcon /> } onClick={handleLogout}>
+          <Box sx={{ flexGrow: 0 }}>
+            <Button onClick={handleLogout} variant="contained" startIcon={<LogoutIcon />}>
               Logout
             </Button>
-          </Box>
-          <Box sx={{ flexGrow: 0, display: { xs: "block", md: "none" } }}>
-            <IconButton aria-label="logout" style={{ color: "white" }} onClick={handleLogout}>
-              <LogoutIcon />
-            </IconButton>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 };
-export default ResponsiveAppBar;
+export default Navbar;

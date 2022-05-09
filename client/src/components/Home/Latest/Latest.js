@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
-import useAuth from "../../../hooks/useAuth";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+
 import "./Latest.css";
-import { getLatest, getTransactions } from "../../../services/apiServices";
+
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-function createData(name, trackingId, date, status) {
-  return { name, trackingId, date, status };
-}
 
 const makeStyle = (status) => {
   if (status === "Income") {
@@ -34,7 +31,6 @@ const makeStyle = (status) => {
 };
 
 export default function BasicTable() {
-  const { auth } = useAuth();
   const [operations, setOperations] = useState([])
   const axiosPrivate = useAxiosPrivate()
   useEffect(() => {
@@ -49,22 +45,22 @@ export default function BasicTable() {
 
   return (
     <div className="Table">
-      <h3>Recent Transactions</h3>
+      <h3 className="Title">Recent Transactions</h3>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Description</TableCell>
-              <TableCell align="left">Tracking ID</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell align="left">Amount</TableCell>
               <TableCell align="left">Date</TableCell>
-              <TableCell align="left">Status</TableCell>
-              <TableCell align="left"></TableCell>
+              <TableCell align="left">Type</TableCell>
+              <TableCell align="left">Description</TableCell>
             </TableRow>
           </TableHead>
           <TableBody style={{ color: "white" }}>
             {operations.map((row) => (
               <TableRow
-                key={row.category}
+                key={row.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
@@ -73,12 +69,12 @@ export default function BasicTable() {
                 <TableCell align="left">{row.amount}</TableCell>
                 <TableCell align="left">{row.operationDate}</TableCell>
                 <TableCell align="left">
-                  <span className="status" style={makeStyle(row.amount)}>
-                    {row.amount}
+                  <span className="status" style={makeStyle(row.type)}>
+                    {row.type}
                   </span>
                 </TableCell>
                 <TableCell align="left" className="Details">
-                  Details
+                  {row.description}
                 </TableCell>
               </TableRow>
             ))}

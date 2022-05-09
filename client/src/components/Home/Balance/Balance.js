@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import useAuth from "../../../hooks/useAuth";
 
-import "./Balance.css";
-
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 import Box from "@mui/material/Box";
