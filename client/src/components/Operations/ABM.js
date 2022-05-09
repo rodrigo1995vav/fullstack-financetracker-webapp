@@ -122,7 +122,6 @@ const ABM = () => {
     setData(temp.data.data);
   };
   const postTransaction = async () => {
-    console.log(auth);
     const response = await axiosPrivate.post("/transactions", form);
     console.log(response);
     setData(data.concat(form));
@@ -130,7 +129,6 @@ const ABM = () => {
   };
 
   const updateTransaction = async () => {
-    console.log(form.id);
     const response = await axiosPrivate.put("/transactions/" + form.id, form);
     console.log(response.data[0]);
     const tempData = response.data[0];
@@ -148,8 +146,6 @@ const ABM = () => {
   };
 
   const deleteTransaction = async () => {
-    console.log("delete");
-    console.log(auth.accessToken);
     await axiosPrivate.delete("/transactions/" + form.id);
     setData(data.filter((console) => console.id !== form.id));
     openCloseModalDelete();
@@ -202,7 +198,6 @@ const ABM = () => {
 
   const handleSelectChange = async (e) => {
     const value = e.target.value;
-    console.log(e.target.value);
     const values = await value.split(".");
     setCategory(values[0]);
     setType(values[1]);
@@ -214,7 +209,6 @@ const ABM = () => {
       const temp = await axiosPrivate.get("/transactions");
       const val = temp.data.data.filter((item) => item.category == value);
       setData(val);
-      console.log(val);
     } else getData();
   };
 
@@ -268,7 +262,6 @@ const ABM = () => {
             value={date}
             onChange={(newValue) => {
               setDate(newValue);
-              console.log(date);
             }}
             renderInput={(params) => <TextField {...params} />}
           />
@@ -310,7 +303,7 @@ const ABM = () => {
   const bodyDelete = (
     <div className={styles.modal}>
       <p>
-        Estás seguro que deseas eliminar la consola <b>{form && form.id}</b> ?{" "}
+        Are you sure you want to delete this <b>{form && form.id}</b> ?{" "}
       </p>
       <div align="right">
         <Button color="secondary" onClick={() => deleteTransaction()}>

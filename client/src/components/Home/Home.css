@@ -1,22 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 
-/* .home {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  text-align: center;
-  align-items: center;
-  max-width: 400px;
-  min-width: 300px;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 2rem;
-  font-family: "Inter", sans-serif;
-} */
 
 .home {
   text-align: center;
