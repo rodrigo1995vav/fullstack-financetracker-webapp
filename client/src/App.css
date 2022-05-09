@@ -43,18 +43,3 @@
     overflow: hidden;
   }
   
-  @media screen and (max-width: 1200px) {
-    .AppGlass{
-      overflow-y: scroll;
-    } 
-  }
-  
-  @media screen and (max-width: 768px) {
-    .AppGlass{
-      grid-template-columns: 1fr;
-    } 
-  }
-
-  .Outlet {
-    padding: 2rem;
-  }

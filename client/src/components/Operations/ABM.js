@@ -24,6 +24,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { categories } from "../../data/categories";
 import SearchIcon from '@mui/icons-material/Search';
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -45,8 +49,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const makeStyle = (status) => {
+  if (status === "Income") {
+    return {
+      background: "rgb(145 254 159 / 47%)",
+      color: "green",
+    };
+  } else if (status === "Expense") {
+    return {
+      background: "#ffadad8f",
+      color: "red",
+    };
+  } else {
+    return {
+      background: "#59bfff",
+      color: "white",
+    };
+  }
+};
+
 const ABM = () => {
   const styles = useStyles();
+
+  const axiosPrivate = useAxiosPrivate();
 
   const [type, setType] = useState("");
 
@@ -94,18 +119,19 @@ const ABM = () => {
   }, []);
 
   const getData = async () => {
-    const temp = await getTransactions(auth);
+    const temp = await axiosPrivate.get("/transactions");
     setData(temp.data.data);
   };
   const postTransaction = async () => {
-    await createTransaction(form, auth);
+    console.log(auth)
+    await axiosPrivate.post("/transactions",form);
     setData(data.concat(form));
     openCloseModalInsert();
   };
 
   const updateTransaction = async () => {
     console.log(form.id)
-    const response = await update(form.id, form, auth);
+    const response = await axiosPrivate.put("/transactions/" + form.id, form);
     console.log(response.data[0]);
     const tempData = response.data[0]
     var newData = data
@@ -124,7 +150,8 @@ const ABM = () => {
 
   const deleteTransaction=async()=>{
     console.log("delete")
-    await deleteT(form.id, auth)
+    console.log(auth.accessToken)
+    await axiosPrivate.delete("/transactions/" + form.id)
     setData(data.filter(console=>console.id!==form.id));
     openCloseModalDelete();
 
@@ -188,7 +215,7 @@ const ABM = () => {
   const handleFilter = async (e) => {
     const value = e.target.value.split('.')[0];
     if (value !== "All") {
-    const temp = await getTransactions(auth)
+    const temp = await axiosPrivate.get("/transactions");
     const val = temp.data.data.filter(item=>item.category==value)
     setData(val)
     console.log(val)
@@ -199,7 +226,7 @@ const ABM = () => {
   const bodyInsert = (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div className={styles.modal}>
-        <h3>Add new operation</h3>
+        <Typography >Add New Transaction</Typography>
         <br />
         <FormControl className={styles.inputMaterial}>
           <InputLabel htmlFor="grouped-native-select">
@@ -298,10 +325,14 @@ const ABM = () => {
   return (
     <div className="ABM">
       <br />
-      <Button onClick={() => openCloseModalInsert()}>Add</Button>
+      <Button variant="contained" onClick={() => openCloseModalInsert()}>New Operation</Button>
       <br />
-      <SearchIcon/>
-      <FormControl className={styles.inputMaterial}>
+      <Box sx={{ flexGrow: 0, display: 'flex',
+          flexDirection: 'row',
+          p: 1,
+          m: 1 }}>
+
+      <FormControl>
           <InputLabel htmlFor="grouped-native-select">
             Select category...
           </InputLabel>
@@ -322,6 +353,7 @@ const ABM = () => {
             </optgroup>
           </Select>
         </FormControl>
+        </Box>
       <br />
       <TableContainer>
         <Table>
@@ -331,6 +363,7 @@ const ABM = () => {
               <TableCell>Amount</TableCell>
               <TableCell>Date</TableCell>
               <TableCell>Type</TableCell>
+              <TableCell>Description</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -340,7 +373,10 @@ const ABM = () => {
                 <TableCell>{field.category}</TableCell>
                 <TableCell>{field.amount}</TableCell>
                 <TableCell>{field.operationDate}</TableCell>
-                <TableCell>{field.type}</TableCell>
+                <TableCell><span className="status" style={makeStyle(field.type)}>
+                    {field.type}
+                  </span></TableCell>
+                <TableCell>{field.description}</TableCell>
                 <TableCell>
                   <Edit
                     className={styles.icons}

@@ -49,8 +49,8 @@ const updateItem = async(req, res) =>{
 const deleteItem = async (req, res) =>{
     try {
         const id = req.params.id
-        const data = await transactionsModel.destroy({where:{id:id}})
-        res.send(data) 
+        await transactionsModel.destroy({where:{id:id}})
+        res.send("Success") 
     } catch (e) {
         handleHttpError(res, "ERROR_DELETE_ITEM")
     }

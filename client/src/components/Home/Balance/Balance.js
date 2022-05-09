@@ -43,7 +43,7 @@ export const Balance = () => {
   const totalBalance = async () => {
     try {
       console.log(auth);
-      const data = await axiosPrivate.get("/transactions");
+      const data = await axiosPrivate.get("/transactions/latest");
 
       const allOperations = await data.data.data;
       let tempExpense = 0;

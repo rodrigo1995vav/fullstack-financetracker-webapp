@@ -51,9 +51,9 @@ const Login = () => {
             //refreshToken should be saved as httpOnly for security, not able to do that due to domain between server and client not equal
             Cookies.set('jwt', response.data.refreshToken)
             
-            const token = response?.data?.accessToken;
+            const accessToken = response?.data?.accessToken;
             console.log(response.data.accessToken)
-            setAuth( token )
+            setAuth( {accessToken} )
             console.log(auth)
             
             setEmail('');

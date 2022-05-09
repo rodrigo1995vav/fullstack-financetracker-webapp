@@ -1,11 +1,11 @@
 import axios from "axios";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+
 
 
 axios.defaults.withCredentials = true
 
 const apiUrl = "http://localhost:3000/api";
-//const priv = useAxiosPrivate()
+
 
 
 
@@ -39,7 +39,7 @@ export function createTransaction(transaction, token) {
 }
 
 export function getTransactions(token) {  
-  return axios.get("/transactions");
+  return axios.get(apiUrl + "/transactions");
 }
 
 export function getLatest(token) {
