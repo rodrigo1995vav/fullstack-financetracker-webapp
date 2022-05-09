@@ -48,8 +48,8 @@ I will try to upload this project to Heroku now that they have local postrgesql 
 # Images of the running app
 
 
-<img src="https://imgur.com/Mk3OFqi">
+<img src="login.png">
 
-<img src="https://imgur.com/4Ir9HOu">
+<img src="home.png">
 
-<img src="https://imgur.com/eZbrOXQ">
+<img src="operations.png">
