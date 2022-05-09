@@ -303,11 +303,11 @@ const ABM = () => {
   const bodyDelete = (
     <div className={styles.modal}>
       <p>
-        Are you sure you want to delete this <b>{form && form.id}</b> ?{" "}
+        Are you sure you want to delete this ?{" "}
       </p>
       <div align="right">
         <Button color="secondary" onClick={() => deleteTransaction()}>
-          Sí
+          Yes
         </Button>
         <Button onClick={() => openCloseModalDelete()}>No</Button>
       </div>

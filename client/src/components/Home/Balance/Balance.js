@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import useAuth from "../../../hooks/useAuth";
-
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 import Box from "@mui/material/Box";
@@ -16,7 +14,7 @@ import { format } from "../../../utils/moneyFormatter";
 
 
 export const Balance = () => {
-  const { auth } = useAuth();
+
   const axiosPrivate = useAxiosPrivate();
 
   const [currentBalance, setCurrentBalance] = useState(0);
@@ -27,7 +25,6 @@ export const Balance = () => {
 
   const totalBalance = async () => {
     try {
-      console.log(auth);
       const data = await axiosPrivate.get("/transactions");
 
       const allOperations = data.data.data;
