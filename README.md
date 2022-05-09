@@ -9,7 +9,8 @@
    
    The data base is a PostgreSql db, at the .env file you should change the variables POSTGRESDB, POSTGRESUSER,POSTGRESPASS and POSTGRESHOST so you can connect to your own db.   
    
-   In the .env file, you can find all the key variables, feel free to change them. 
+   At
+ the .env file, you can find all the key variables, feel free to change them. 
 
 
 Once you get the up running, sign up to have your own data.
