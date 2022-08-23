@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import "./ABM.css";
-import useAuth from "../../hooks/useAuth";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -53,16 +52,22 @@ const makeStyle = (status) => {
     return {
       background: "rgb(145 254 159 / 47%)",
       color: "green",
+      padding: "0.5rem",
+      'border-radius': "0.5rem",
     };
   } else if (status === "Expense") {
     return {
       background: "#ffadad8f",
       color: "red",
+      padding: "0.5rem",
+      'border-radius': "0.5rem",
     };
   } else {
     return {
       background: "#59bfff",
       color: "white",
+      padding: "0.5rem",
+      'border-radius': "0.5rem",
     };
   }
 };
@@ -77,7 +82,6 @@ const ABM = () => {
   const [category, setCategory] = useState("");
   const [date, setDate] = useState(new Date());
 
-  const { auth } = useAuth();
   const [data, setData] = useState([]);
 
   const [modalInsert, setModalInsert] = useState(false);
@@ -207,7 +211,7 @@ const ABM = () => {
     const value = e.target.value.split(".")[0];
     if (value !== "All") {
       const temp = await axiosPrivate.get("/transactions");
-      const val = temp.data.data.filter((item) => item.category == value);
+      const val = temp.data.data.filter((item) => item.category === value);
       setData(val);
     } else getData();
   };

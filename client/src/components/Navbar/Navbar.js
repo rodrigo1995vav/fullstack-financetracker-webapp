@@ -1,3 +1,4 @@
+
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -12,7 +13,6 @@ import MenuItem from "@mui/material/MenuItem";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import Cookies from "js-cookie"
 import useLogout from "../../hooks/useLogout";
 
@@ -23,8 +23,6 @@ const pages = ["Home", "Operations"];
 const ResponsiveAppBar = () => {
   const navigate = useNavigate();
   const signout = useLogout() 
-
-  const { auth, setAuth } = useAuth();
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -37,28 +35,25 @@ const ResponsiveAppBar = () => {
   };
 
   const handleNavigate = (page) => {
-    if (page.target.value == "Home") navigate("/");
-    if (page.target.value == "Operations") navigate("/operations");
+    if (page.target.value === "Home") navigate("/user/myaccount");
+    if (page.target.value === "Operations") navigate("/user/myaccount/operations");
   };
 
   const handleNavMenu = (e) => {
-    if (e.target.textContent == "Home") navigate("/");
-    if (e.target.textContent == "Operations") navigate("/operations");
+    if (e.target.textContent === "Home") navigate("/user/myaccount");
+    if (e.target.textContent === "Operations") navigate("/user/myaccount/operations");
   };
 
   const handleLogout = async() => {
     await signout()
     Cookies.remove('jwt')
-    navigate("/login")
+    navigate("/")
   }
 
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AccountBalanceWalletIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-          />
           <Typography
             variant="h6"
             noWrap
@@ -76,7 +71,6 @@ const ResponsiveAppBar = () => {
           >
             Money Tracker
           </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -103,19 +97,25 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: "flex",
+                flexDirection: "column"
               }}
             >
-              <MenuItem key="Ho" onClick={handleCloseNavMenu}>
-                <Typography onClick={handleNavMenu} textAlign="center">
+              <Box sx={{
+                display: "flex",
+                flexDirection: "column"
+              }}>
+              <MenuItem key="Ho" onClick={handleCloseNavMenu} sx={{flex: 1, margin: "10px"}}>
+                <Typography onClick={handleNavMenu} textAlign="center" sx={{flex: 1, margin:"0.5rem"}}>
                   Home
                 </Typography>
               </MenuItem>
-              <MenuItem key="Op" onClick={handleCloseNavMenu}>
-                <Typography onClick={handleNavMenu} textAlign="center">
+              <MenuItem key="Op" onClick={handleCloseNavMenu} sx={{flex: 1}}>
+                <Typography onClick={handleNavMenu} textAlign="center" sx={{flex: 1, margin:"0.5rem"}}>
                   Operations
                 </Typography>
               </MenuItem>
+              </Box>
             </Menu>
           </Box>
           <AccountBalanceWalletIcon

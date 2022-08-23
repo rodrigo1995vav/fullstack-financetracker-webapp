@@ -59,7 +59,7 @@ const Login = () => {
             
             setEmail('');
             setPwd('');
-            navigate('/')
+            navigate('/user/myaccount')
         } catch (err) {
             if (!err?.response) {
                 setErrMsg('No Server Response');

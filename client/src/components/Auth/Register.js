@@ -106,19 +106,19 @@ const Register = () => {
 
 
     return (
-        <>
+        <div className="register-wrapper">
             {success ? (
                 <section>
                     <h1>Success!</h1>
                     <span className="line">                            
-                            <Link to="/login">Sign In</Link>
+                            <Link to="/">Sign In</Link>
                     </span>
                 </section>
             ) : (
                 <section>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1 className='header-auth'>Register</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form className='auth-form' onSubmit={handleSubmit}>
                         <label htmlFor="username">
                             Username:
                             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
@@ -222,12 +222,12 @@ const Register = () => {
                     <p>
                         Already registered?<br />
                         <span className="line">                            
-                            <Link style={{ color: 'black' }} to="/login">Sign In</Link>
+                            <Link style={{ color: 'black' }} to="/">Sign In</Link>
                         </span>
                     </p>
                 </section>
             )}
-        </>
+        </div>
     )
 }
 

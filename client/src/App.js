@@ -1,36 +1,23 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Register from "./components/Auth/Register";
-import Home from "./components/Home/Home";
-import { Outlet } from "react-router-dom";
-import Login from "./components/Auth/Login";
-import ABM from "./components/Operations/ABM";
-import Navbar from "./components/Navbar/Navbar";
-
-const Layout = () => {
-  return (
-    <>
-      <div className="Outlet">
-        <Navbar />
-        <Outlet />
-      </div>
-    </>
-  );
-};
+import PublicRoutes from "./routes/PublicRoutes";
+import PrivateRoutes from "./routes/PrivateRoutes";
+import Redirect from "./routes/Redirect";
 
 function App() {
   return (
     <div className="App">
-      <div className="AppGlass">
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="operations" element={<ABM />} />
-          </Route>
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/*" element={<PublicRoutes />} />
+        <Route
+          path="/user/*"
+          element={
+            <Redirect>
+              <PrivateRoutes />
+            </Redirect>
+          }
+        />
+      </Routes>
     </div>
   );
 }
